@@ -1,0 +1,260 @@
+@mixin overflow-ellipsis() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+.sideMenu-tree {
+  padding-right: 5px;
+  overflow: hidden;
+  width: 200px;
+
+  .link-node .link-node {
+    //padding-left: 20px;
+  }
+
+  .link-node {
+    display: flex;
+    min-height: 28px;
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 0 0 1.5rem;
+      text-decoration: none;
+      background: transparent;
+      border-radius: 0 32px 32px 0;
+      border: none;
+      cursor: pointer;
+      user-select: none;
+      outline: none;
+      transition: 0.2s all;
+      overflow: hidden;
+
+      .nav-link__content {
+        display: flex;
+        align-items: center;
+        height: 40px;
+        overflow: hidden;
+
+        .nav-link__content__title {
+          font-size: 0.83rem;
+          font-weight: 500;
+          line-height: 1rem;
+          @include overflow-ellipsis();
+          color: rgba(0, 0, 0, .67);
+          //color: #5f6368;
+          transition: 0.2s all;
+        }
+
+        .nav-link__content__icon {
+          width: 20px;
+          height: 20px;
+          font-size: 20px;
+          margin-right: 0.5rem;
+          //padding: 0 0.2rem 0.2rem;
+          color: rgba(0, 0, 0, 0.65);
+          line-height: 20px;
+        }
+
+        .hidden {
+          display: none;
+        }
+      }
+
+      .nav-link__button {
+        display: flex;
+        justify-content: center;
+
+        ::ng-deep .mat-button-wrapper {
+          display: flex;
+          align-items: center;
+        }
+
+      }
+
+      .nav-link__expander {
+        display: flex;
+        justify-content: center;
+        color: rgba(0, 0, 0, 0.7);
+        min-width: 0;
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        font-size: 20px;
+        border-radius: 50%;
+      }
+
+      &.nav-link--disabled {
+        pointer-events: none;
+        cursor: not-allowed;
+
+        .nav-link__content {
+          .nav-link__content__title,
+          .nav-link__content__icon {
+            opacity: 0.28;
+          }
+        }
+      }
+
+      &.nav-link--button {
+        width: 100%;
+        min-height: 40px;
+      }
+
+      &.nav-link--active {
+        background: rgba(255, 102, 35, 0.1);
+
+        .nav-link__content {
+          .nav-link__content__title,
+          .nav-link__content__icon {
+            color: #ff6500;
+          }
+        }
+
+        .nav-link__expander {
+          color: #ff6500;
+        }
+      }
+
+      &.nav-link--active-parent {
+        background: rgba(255, 102, 35, 0.05);
+      }
+
+      &.nav-link--child {
+        padding: 0 0 0 0;
+
+        .nav-link__content {
+          height: 26px;
+          min-width: 26px;
+
+          .nav-link__content__title {
+            color: rgba(0, 0, 0, 0.67);
+          }
+
+          .nav-link__content__icon {
+            color: rgba(0, 0, 0, 0.5);
+            min-width: 24px;
+          }
+        }
+
+        &:hover {
+          .nav-link__content {
+            .nav-link__content__title {
+              color: #ff6500;
+            }
+
+            .nav-link__content__icon {
+              color: #ff6500;
+            }
+          }
+        }
+      }
+
+      &.nav-link--leaf {
+        padding: 0 1rem 0 0;
+        width: 100%;
+
+        .nav-link__content {
+
+          .nav-link__content__icon {
+            margin-right: 0.5rem;
+            color: #767676;
+            min-width: 24px;
+
+            ::ng-deep .avatar-container {
+              border: solid 2px rgba(0, 0, 0, 0.4);
+              border-radius: 50px;
+              overflow: hidden;
+              background-color: transparent !important;
+
+              .avatar-content {
+                color: rgba(0, 0, 0, 0.6);
+                font-weight: 600;
+              }
+            }
+          }
+        }
+      }
+
+      &:hover {
+        background: rgba(255, 102, 35, 0.1);
+
+        .nav-link__content {
+          .nav-link__content__title,
+          .nav-link__content__icon {
+            color: #ff6500;
+          }
+        }
+
+        .nav-link__expander {
+          color: #ff6500;
+        }
+
+      }
+    }
+
+    &.link-node--root {
+      display: block;
+      min-height: 40px;
+
+      .nav-link {
+        .nav-link__content {
+          overflow: visible;
+        }
+      }
+    }
+  }
+
+  :host ::ng-deep .highlight {
+    background-color: #F2E366;
+  }
+
+  .sideMenu-tree__no-results {
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.04);
+
+    .sideMenu-tree__no-results__text {
+      font-size: 0.83rem;
+      font-weight: 500;
+      line-height: 1rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: rgba(0, 0, 0, 0.67);
+      transition: 0.2s all;
+    }
+  }
+}
+
+.sideMenu-tree--closed {
+  .link-node {
+    display: flex;
+
+    .nav-link {
+      .nav-link__content {
+        .nav-link__content__title {
+          display: none;
+        }
+      }
+
+      .nav-link__button {
+        display: none;
+      }
+    }
+
+    .nav-link--child {
+      padding: 0;
+    }
+
+    .nav-link--leaf {
+      padding: 0;
+    }
+
+    &.link-node--root {
+      display: block;
+    }
+  }
+}

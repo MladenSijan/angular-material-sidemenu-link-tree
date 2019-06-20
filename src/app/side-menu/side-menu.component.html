@@ -1,0 +1,41 @@
+<div class="sideMenu-tree">
+	<mat-tree [dataSource]="linkTree.dataSource" [treeControl]="linkTree.treeControl">
+		<!-- This is the tree node template for leaf nodes -->
+		<mat-tree-node *cdkTreeNodeDef="let node" 
+                  class="link-node"
+                  [ngClass]="{'link-node--root': node.level === 0}">
+			<a class="nav-link" [style.padding-left]="setLinkPadding(node)" 
+        [ngClass]="{
+          'nav-link--disabled': node.disabled,
+          'nav-link--active': node.active && !node.expandable,
+          'nav-link--child': node.level > 0,
+          'nav-link--leaf': node.level > 0 && !node.expandable
+        }">
+				<span class="nav-link__content">
+          <mat-icon class="nav-link__content__icon">{{node.linkIcon}}</mat-icon>
+          <p class="nav-link__content__title">{{node.title}}</p>
+        </span>
+      </a>
+    </mat-tree-node>
+    <!-- This is the tree node template for expandable nodes -->
+    <mat-tree-node *cdkTreeNodeDef="let node; when: linkTree.hasChild" class="link-node"
+                    [ngClass]="{'link-node--root': node.level === 0}" matTreeNodeToggle>
+      <button class="nav-link nav-link--button"
+              [style.padding-left]="setLinkPadding(node)"
+              [ngClass]="{'nav-link--disabled': node.disabled,'nav-link--child': node.level > 0}">
+        <span class="nav-link__content">
+          <mat-icon class="nav-link__content__icon">{{node.linkIcon}}</mat-icon>
+          <p class="nav-link__content__title">{{node.title}}</p>
+        </span>
+        <button mat-icon-button color="accent" 
+                class="nav-link__button" 
+                [attr.aria-label]="'toggle ' + node.title">
+          <mat-icon class="mat-icon-rtl-mirror nav-link__expander">
+            {{linkTree.treeControl.isExpanded(node) ? 
+            'keyboard_arrow_up' : 'keyboard_arrow_down'}}
+          </mat-icon>
+        </button>
+      </button>
+    </mat-tree-node>
+  </mat-tree>
+</div>
